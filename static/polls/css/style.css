@@ -1,0 +1,13 @@
+.brand-container {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+}
+
+.centered-image {
+    max-width: 100%; /* Optional: it ensures the image is not bigger than the container */
+    max-height: 100%; /* Optional: it also ensures the image is not taller than the container */
+}
+label {
+        font-weight: bold;
+    }

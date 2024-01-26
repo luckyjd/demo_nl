@@ -3,5 +3,5 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path("", views.index, name="index"),
+    path("", views.lock_meeting_view, name="lock_meeting"),
 ]
