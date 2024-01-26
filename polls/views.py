@@ -14,18 +14,17 @@ def index(request):
 
 
 def lock_meeting_view(request):
-    is_lock = False
+    is_lock = None
     if request.method == 'POST':
         form = DemoLockMeetingForm(request.POST)
         if form.is_valid():
 
             data = form.data
             device_token_obj = gen_token_device()
-            meeting_token_obj = gen_token_meeting(data["meeting_name"], device_token_obj["token"])
+            meeting_token_obj = gen_token_meeting(data["meeting_name"], device_token_obj["token"], data["meeting_host_code"])
             get_lock_status = get_meeting_lock_status(data["meeting_name"], meeting_token_obj["token"])
             lock_meeting_flg = lock_unlock_meeting(data["meeting_name"], meeting_token_obj["token"], get_lock_status)
             is_lock = not get_lock_status
-
 
     else:
         form = DemoLockMeetingForm()
@@ -44,7 +43,7 @@ def gen_token_device():
     return data["result"]
 
 
-def gen_token_meeting(meeting_name, device_token):
+def gen_token_meeting(meeting_name, device_token, meeting_code):
     url = f"https://{ENDPOINT}/api/client/v2/conferences/{meeting_name}/request_token"
     payload = {
           "display_name": "demo_web",
@@ -55,7 +54,7 @@ def gen_token_meeting(meeting_name, device_token):
           "node": ENDPOINT
         }
     headers = {
-        'pin': '3979',
+        'pin': meeting_code,
     }
     response = requests.post(url, data=payload, headers=headers)
     data = json.loads(response.content)

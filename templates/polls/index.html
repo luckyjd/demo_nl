@@ -39,10 +39,12 @@
                     </button>
                 </div>
             </form>
-            {% if is_lock %}
-                <H1>Đang Khóa</H1>
-            {% else %}
-                <H1>Đang Mở</H1>
+            {% if is_lock != None %}
+                {% if is_lock %}
+                    <H1>Đang Khóa</H1>
+                {% else %}
+                    <H1>Đang Mở</H1>
+                {% endif %}
             {% endif %}
         </div>
 
